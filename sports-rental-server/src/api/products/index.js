@@ -5,8 +5,7 @@ import { token, master } from '../../services/passport';
 import { create, index, show, update, destroy } from './controller';
 import { schema } from './model';
 
-import Products, { schema } from './model';
-// export
+export Products, { schema } from './model';
 
 const router = new Router();
 
@@ -32,7 +31,7 @@ const { name, title, description, thumb_image, images, is_available, available_c
  */
 router.post(
   '/',
-  token({ required: true, roles: ['admin'] }),
+  token({ required: true }),
   body({ name, title, description, thumb_image, images, is_available, available_count }),
   create
 );

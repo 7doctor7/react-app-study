@@ -1,14 +1,16 @@
 import { success, notFound } from '../../services/response/';
 import { Products } from '.';
 
-export const create = ({ bodymen: { body } }, res, next) =>
+export const create = ({ bodymen: { body } }, res, next) => {
+  console.log('body => ', body, '\n \n \n');
   Products.create(body)
     .then(products => products.view(true))
     .then(success(res.json(), 201))
     .catch(next);
+};
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
-  Products.count(query)
+  Products.countDocuments(query)
     .then(count =>
       Products.find(query, select, cursor).then(products => ({
         count,

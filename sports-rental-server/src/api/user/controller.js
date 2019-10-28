@@ -1,6 +1,6 @@
 import { success, notFound } from '../../services/response/';
-import { User } from '.';
 import { sign } from '../../services/jwt';
+import User from './model';
 
 export const index = ({ querymen: { query, select, cursor } }, res, next) =>
   User.count(query)
@@ -22,7 +22,8 @@ export const show = ({ params }, res, next) =>
 
 export const showMe = ({ user }, res) => res.json(user.view(true));
 
-export const create = ({ bodymen: { body } }, res, next) =>
+export const create = ({ bodymen: { body } }, res, next) => {
+  console.log('body => ', body, '\n\n\n');
   User.create(body)
     .then(user => {
       sign(user.id)
@@ -30,6 +31,7 @@ export const create = ({ bodymen: { body } }, res, next) =>
         .then(success(res, 201));
     })
     .catch(err => {
+      console.log('err => ', JSON.stringify(err), '\n\n\n');
       /* istanbul ignore else */
       if (err.name === 'MongoError' && err.code === 11000) {
         res.status(409).json({
@@ -37,10 +39,13 @@ export const create = ({ bodymen: { body } }, res, next) =>
           param: 'email',
           message: 'email already registered'
         });
+      } else if (err.errors) {
+        res.status(409).json({ ...err });
       } else {
         next(err);
       }
     });
+};
 
 export const update = ({ bodymen: { body }, params, user }, res, next) =>
   User.findById(params.id === 'me' ? user.id : params.id)

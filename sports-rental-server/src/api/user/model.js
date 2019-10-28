@@ -41,7 +41,10 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.path('email').set(email => {
+userSchema.path('email').set((email = '') => {
+  // console.log('email => ', email, '\n\n\n');
+  // console.log('email => ', /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email), '\n\n\n');
+  // console.log('email => ', /^\S+@\S+\.\S+$/.test(email), '\n\n\n');
   if (!this.picture || this.picture.indexOf('https://gravatar.com') === 0) {
     const hash = crypto
       .createHash('md5')
@@ -75,7 +78,7 @@ userSchema.pre('save', next => {
 userSchema.methods = {
   view(full) {
     let view = {};
-    let fields = ['id', 'name', 'picture'];
+    let fields = ['id', 'name', 'picture', 'role'];
 
     if (full) {
       fields = [...fields, 'email', 'createdAt'];

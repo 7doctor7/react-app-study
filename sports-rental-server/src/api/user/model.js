@@ -41,7 +41,7 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.path('email').set(function(email) {
+userSchema.path('email').set(email => {
   if (!this.picture || this.picture.indexOf('https://gravatar.com') === 0) {
     const hash = crypto
       .createHash('md5')
@@ -57,7 +57,7 @@ userSchema.path('email').set(function(email) {
   return email;
 });
 
-userSchema.pre('save', function(next) {
+userSchema.pre('save', next => {
   if (!this.isModified('password')) return next();
 
   /* istanbul ignore next */

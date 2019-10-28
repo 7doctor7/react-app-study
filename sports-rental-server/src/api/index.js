@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import user from './user';
 import auth from './auth';
+import products from './products';
 
 const router = new Router();
 
@@ -28,6 +29,7 @@ const router = new Router();
  * @apiParam {String[]} [fields] Fields to be returned.
  */
 router.use('/users', user);
-router.use('/api/v1/auth', auth);
+router.use('/auth', auth);
+router.use('/products', products);
 
 export default router;

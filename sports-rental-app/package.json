@@ -4,12 +4,16 @@
   "main": "src",
   "private": true,
   "scripts": {
-    "start": "node .",
+    "start": "npm run prod",
+    "dev": "concurrently -k \"npm run run-app-dev\" \"wait-on http://0.0.0.0:9001 && npm run start-server-dev \"",
+    "prod": "concurrently \"npm run build-app-prod \"  \"sleep 10 && npm run start-server-prod \"",
+    "run-app-dev": "cd client && npm start",
+    "start-server-dev": "nodemon -i \"*.test.js\" .",
+    "build-app-prod": "cd client && npm run build",
+    "start-server-prod": "cross-env NODE_ENV=production nodemon -i \"*.test.js\" -r dotenv-safe/config .",
     "test": "jest",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
-    "dev": "nodemon -i \"*.test.js\" .",
-    "prod": "cross-env NODE_ENV=production nodemon -i \"*.test.js\" -r dotenv-safe/config .",
     "lint": "eslint src",
     "docs": "apidoc -i src -o docs && apidoc-markdown -p docs -o DOCS.md",
     "postdocs": "opn docs/index.html"
@@ -52,6 +56,7 @@
     "body-parser": "^1.18.2",
     "bodymen": "^1.0.3",
     "compression": "^1.7.1",
+    "concurrently": "^5.0.0",
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-force-ssl": "^0.3.2",
@@ -67,6 +72,7 @@
     "querymen": "^2.1.3",
     "rand-token": "^0.4.0",
     "request": "^2.83.0",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "wait-on": "^3.3.0"
   }
 }

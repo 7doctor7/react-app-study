@@ -3,13 +3,16 @@ import mongoose, { Schema } from 'mongoose';
 const productsSchema = new Schema(
   {
     name: {
-      type: String
+      type: String,
+      required: true
     },
     title: {
-      type: String
+      type: String,
+      required: true
     },
     description: {
-      type: String
+      type: String,
+      required: true
     },
     thumb_image: {
       type: String

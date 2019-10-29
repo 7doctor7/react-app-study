@@ -10,7 +10,7 @@ const userSchema = new Schema(
   {
     email: {
       type: String,
-      match: /^\S+@\S+\.\S+$/,
+      match: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
       required: true,
       unique: true,
       trim: true,
@@ -41,10 +41,7 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.path('email').set((email = '') => {
-  // console.log('email => ', email, '\n\n\n');
-  // console.log('email => ', /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email), '\n\n\n');
-  // console.log('email => ', /^\S+@\S+\.\S+$/.test(email), '\n\n\n');
+userSchema.path('email').set(function(email) {
   if (!this.picture || this.picture.indexOf('https://gravatar.com') === 0) {
     const hash = crypto
       .createHash('md5')
@@ -60,7 +57,7 @@ userSchema.path('email').set((email = '') => {
   return email;
 });
 
-userSchema.pre('save', next => {
+userSchema.pre('save', function(next) {
   if (!this.isModified('password')) return next();
 
   /* istanbul ignore next */

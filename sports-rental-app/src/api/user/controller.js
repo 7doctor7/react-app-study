@@ -22,8 +22,7 @@ export const show = ({ params }, res, next) =>
 
 export const showMe = ({ user }, res) => res.json(user.view(true));
 
-export const create = ({ bodymen: { body } }, res, next) => {
-  console.log('body => ', body, '\n\n\n');
+export const create = ({ bodymen: { body } }, res, next) =>
   User.create(body)
     .then(user => {
       sign(user.id)
@@ -31,7 +30,6 @@ export const create = ({ bodymen: { body } }, res, next) => {
         .then(success(res, 201));
     })
     .catch(err => {
-      console.log('err => ', JSON.stringify(err), '\n\n\n');
       /* istanbul ignore else */
       if (err.name === 'MongoError' && err.code === 11000) {
         res.status(409).json({
@@ -45,7 +43,6 @@ export const create = ({ bodymen: { body } }, res, next) => {
         next(err);
       }
     });
-};
 
 export const update = ({ bodymen: { body }, params, user }, res, next) =>
   User.findById(params.id === 'me' ? user.id : params.id)

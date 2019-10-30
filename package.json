@@ -1,5 +1,7 @@
 {
   "name": "sports-rental-server",
+  "author": "p.baranau",
+  "license": "MIT",
   "version": "0.0.0",
   "main": "src",
   "private": true,
@@ -74,5 +76,8 @@
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "wait-on": "^3.3.0"
+  },
+  "engines": {
+    "node": "10.x"
   }
 }

@@ -11,7 +11,7 @@
     "prod": "concurrently \"npm run build-app-prod \"  \"sleep 10 && npm run start-server-prod \"",
     "run-app-dev": "cd client && npm start",
     "start-server-dev": "nodemon -i \"*.test.js\" .",
-    "build-app-prod": "cd client && npm run build",
+    "build-app-prod": "cd client && npm i && npm run build",
     "start-server-prod": "cross-env NODE_ENV=production nodemon -i \"*.test.js\" -r dotenv-safe/config .",
     "test": "jest",
     "coverage": "npm test -- --coverage",
@@ -78,6 +78,6 @@
     "wait-on": "^3.3.0"
   },
   "engines": {
-    "node": "10.x"
+    "node": "10.15.x"
   }
 }

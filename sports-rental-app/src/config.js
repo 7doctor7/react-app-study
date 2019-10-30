@@ -60,5 +60,5 @@ const config = {
   }
 };
 
-module.exports = merge(config.all, config[config.all.env]);
+module.exports = merge(config.all, config[ config.all.env ]);
 export default module.exports;
